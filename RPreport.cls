@@ -79,56 +79,100 @@
 % Variablen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Vorbelegen
+% Werte
 \def\kopfzeile{} % Kopfzeile leer wenn nichts eingestellt ist
 \def\thema{Thema fehlt}
 \def\art{Art fehlt}
 \def\datum{Datum fehlt}
-\def\bearbeiter{Berbeiter: }
-\def\verantwortlicher{Verantwortlicher}
-\def\betreuer{Betreuer: }
+%
+\def\bearbeiterPräf{Bearbeiter: }
+\def\verantwortlicherPräf{Verantwortlicher} % = Bearbeiter, aber für Unterschrift auf Deckblatt
+\def\betreuerPräf{Betreuer: }
+%
 \def\gruppe{}
 %
+\def\matrikelnummer{}
+\def\strasse{}
+\def\ort{}
+\def\email{}
+\def\firmenname{}
+%
+\def\autorenverzeichnis{} % wird eine Tabelle
+
+% Dateien
+\def\titelbild{}
+\def\firmenlogo{}
+%
+\def\abstract{}
+\def\symbole{}
+\def\danksagung{}
+\def\sperrvermerk{}
+
+% Booleans
 \def\loc{j}
 \def\lof{j}
 \def\lot{j}
+\def\lol{n} % list of listings für Quellcode
 \def\esl{n}
 \def\zsl{n}
 \def\deckblatt{j}
-%
-\def\titelbild{}
-\def\abstract{}
-\def\symbole{}
-\def\anhang{}
+\def\arbeit{n}
+\def\autorenverzeichnisAnzeigen{n}
 
-% Werte aus der Präambel nehmen
+% Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\Kopfzeile}[1]{\def\kopfzeile{#1}}
 \newcommand{\Thema}[1]{\def\thema{#1}}
 \newcommand{\Art}[1]{\def\art{#1}}
 \newcommand{\Datum}[1]{\def\datum{#1}}
+\newcommand{\Arbeit}[1]{\def\arbeit{#1}}
+%
 \newcommand{\Bearbeiter}[2]{\def\bearbeitername{#2}
 	\ifthenelse{\equal{#1}{w}}
-		{\def\bearbeiter{Bearbeiterin: } \def\verantwortlicher{Verantwortliche}}
-		{\def\bearbeiter{Bearbeiter: } \def\verantwortlicher{Verantwortlicher}
+		{\def\bearbeiterPräf{Bearbeiterin: } \def\verantwortlicherPräf{Verantwortliche}}
+		{\def\bearbeiterPräf{Bearbeiter: } \def\verantwortlicherPräf{Verantwortlicher}
 		\typeout{[Bearbeiter] Hinweis: Ungültiger Eintrag '#1', verwende default 'm'} } }
 \newcommand{\Betreuer}[2]{\def\betreuername{#2}
 	\ifthenelse{\equal{#1}{w}}
-		{\def\betreuer{Betreuerin: }}
-		{\def\betreuer{Betreuer: }
+		{\def\betreuerPräf{Betreuerin: }}
+		{\def\betreuerPräf{Betreuer: }
 		\typeout{[Betreuer] Hinweis: Ungültiger Eintrag '#1', verwende default 'm'} } }
+%
 \newcommand{\Gruppe}[1]{\def\gruppe{#1}}
+%
+\newcommand{\autoreintrag}[3]{%
+	\par\noindent
+	\textbf{#1}\\
+	#2\\
+	\texttt{#3}\par\vspace{0.8em}}
+\newcommand{\Autor}[3]{%
+	\g@addto@macro\autorenverzeichnis{\autoreintrag{#1}{#2}{#3}}}
+\newcommand{\Autorenverzeichnis}{%
+	\section*{Autorenverzeichnis}
+	\autorenverzeichnis}
+%
+\newcommand{\Matrikelnummer}[1]{\def\matrikelnummer{#1}}
+\newcommand{\Strasse}[1]{\def\strasse{#1}}
+\newcommand{\Ort}[1]{\def\ort{#1}}
+\newcommand{\EMail}[1]{\def\email{#1}}
+\newcommand{\Firmenname}[1]{\def\firmenname{#1}}
 %
 \newcommand{\Inhaltsverzeichnis}[1]{\def\loc{#1}}
 \newcommand{\Abbildungsverzeichnis}[1]{\def\lof{#1}}
 \newcommand{\Tabellenverzeichnis}[1]{\def\lot{#1}}
+\newcommand{\Quellcodeverzeichnis}[1]{\def\lol{#1}}
 \newcommand{\ErsteSeiteLeer}[1]{\def\esl{#1}}
 \newcommand{\ZwischenSeiteLeer}[1]{\def\zsl{#1}}
 \newcommand{\Deckblatt}[1]{\def\deckblatt{#1}}
+\newcommand{\Autorenverzichnis}[1]{\def\autorenverzeichnisAnzeigen{#1}}
 %
 \newcommand{\Titelbilddatei}[1]{\def\titelbild{#1}}
 \newcommand{\Abstractdatei}[1]{\def\abstract{#1}}
 \newcommand{\Symbolverzeichnisdatei}[1]{\def\symbole{#1}}
-\newcommand{\Literaturdatei}[1]{\def\literatur{#1}}
+\newcommand{\Danksagungdatei}[1]{\def\danksagung{#1}}
+\newcommand{\Sperrvermerkdatei}[1]{\def\sperrvermerk{#1}}
+\newcommand{\Firmenlogodatei}[1]{\def\firmenlogo{#1}}
 
 % Kopfzeile
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -156,6 +200,8 @@
 % Intro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\RPintro{
+
+\ifthenelse{\equal{\arbeit}{n}} { % Wenn keine Arbeit, dann normales Intro
 
 \ifthenelse{\equal{\esl}{j}} {
 \thispagestyle{empty}
@@ -189,14 +235,14 @@
 
 \ifthenelse{\equal{\gruppe}{}} {
 \begin{tabularx}{\textwidth}{@{} r X @{}}
-  \bearbeiter & \bearbeitername \\
-  \betreuer   & \betreuername \\
+  \bearbeiterPräf & \bearbeitername \\
+  \betreuerPräf   & \betreuername \\
 \end{tabularx}
 }{
 \begin{tabularx}{\textwidth}{@{} r X @{}}
   Gruppe:     & \gruppe \\
-  \bearbeiter & \bearbeitername \\
-  \betreuer   & \betreuername \\
+  \bearbeiterPräf & \bearbeitername \\
+  \betreuerPräf   & \betreuername \\
 \end{tabularx}
 }% Ende ifthenelse Gruppe
 
@@ -204,7 +250,7 @@
 
 \begin{tabularx}{\textwidth}{@{} X X r @{}}
 	Ort, Datum: \dotfill	& Unterschrift: \dotfill \\
-					& \hfill (\verantwortlicher) \hfill
+					& \hfill (\verantwortlicherPräf) \hfill
 \end{tabularx}
 
 \pagebreak
@@ -242,6 +288,18 @@
 
 \pagestyle{scrheadings}
 
+}% Ende für nicht Arbeit
+{
+Tja, den Teil hab ich noch nicht geschrieben.
+}% Ende ifthenelse Arbeit
+
 }% Ende RPintro
 
 
+% Outro
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\RPoutro{
+
+\Autorenverzeichnis
+
+}% Ende RPoutro

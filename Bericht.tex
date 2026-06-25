@@ -12,11 +12,19 @@
 \Datum{23.05.2025}
 \Gruppe{4.3.1}
 
+% Wenn Arbeit (s.u. \Arbeit):
+\Matrikelnummer{1234567}
+\Strasse{Musterstraße 1}
+\Ort{12345 Stadt}
+\EMail{name@th.de}
+\Firmenname{Beispiel GmbH}
+
 % m oder w angeben, mehrere Namen mit \newline trennen, Unterstreichen mit \underline{Name}
 \Bearbeiter{m}{Roman Pfleger}
 \Betreuer{m}{Prof. Dr.-Ing. Armin Beier}
 
 % Ja (j) / Nein (n)
+\Arbeit{n} % Projekt- oder Abschlussarbeit
 \ErsteSeiteLeer{n}
 \Deckblatt{j}
 \ZwischenSeiteLeer{n}
@@ -28,39 +36,19 @@
 \Titelbilddatei{} % Default ist das VT-Ohm-Logo
 \Abstractdatei{Abstract}
 \Symbolverzeichnisdatei{Symbole}
+% Wenn Arbeit und gewünscht:
+\Danksagungdatei{}
+\Sperrvermerkdatei{}
+\Firmenlogodatei{}
 
 % .bib Datei eintragen
 \addbibresource{Literatur.bib}
 
-% ===============================
-% 1. Autoren-Verwaltung
-% ===============================
+% Wenn Autorenverzeichnis:
+\Autor{Max Mustermann}{Universität Musterstadt}{max@uni.de}
+\Autor{Erika Beispiel}{Institut für Demo-Forschung}{erika@demo.org}
 
-% Leere Liste zum Sammeln der Autoren:
-\newcommand{\authorslist}{}
-
-% Einzelnes Autoren-Format:
-\newcommand{\authorentry}[3]{%
-	\par\noindent
-	\textbf{#1}\\
-	#2\\
-	\texttt{#3}\par\vspace{0.8em}
-}
-
-% Befehl zum Hinzufügen eines Autors:
-\newcommand{\addauthor}[3]{%
-	\g@addto@macro\authorslist{\authorentry{#1}{#2}{#3}}
-}
-
-% Befehl zum Ausgeben des Verzeichnisses:
-\newcommand{\printauthors}{%
-	\section*{Autorenverzeichnis}
-	\authorslist
-}
-
-% ===============================
-% 2. Titeldefinition
-% ===============================
+% LaTeX-intern
 \title{Ein Beispiel mit Autorenverzeichnis in TeXstudio}
 \author{Projektteam Demo}
 \date{\today}
@@ -78,12 +66,8 @@
 	\printbibliography[heading=bibintoc]
 	\appendix
 	\include{Anhang}
-	
-	% Autoren hinzufügen:
-	\addauthor{Max Mustermann}{Universität Musterstadt}{max@uni.de}
-	\addauthor{Erika Beispiel}{Institut für Demo-Forschung}{erika@demo.org}
-	\addauthor{Jonas Demo}{Hochschule für Anwendungen}{jonas@hs-app.de}
-	
-	% Ausgabe des Verzeichnisses:
-	\printauthors
+
+	\RPoutro % stellt den ganzen Schluss zusammen
+	% Autoren werden unten eingebunden
+
 \end{document}
