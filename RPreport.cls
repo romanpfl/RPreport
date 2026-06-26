@@ -1,7 +1,7 @@
 % RPreport.cls: Praktikumsbericht-Klasse
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{RPreport}[2025/05/22 Klasse für Praktikumsberichte]
-\typeout{Report class for lab reports. Created 22.05.2025, last modified 23.05.2025 by Roman Pfleger}
+\typeout{Report class for lab reports. Created 22.05.2025, last modified 26.06.2026 by Roman Pfleger}
 
 % Basisklasse laden – z. B. article
 \LoadClass[12pt,a4paper,numbers=noenddot]{scrreprt}
@@ -24,6 +24,7 @@
 \RequirePackage[autooneside=false]{scrlayer-scrpage}
 \RequirePackage{ifthen}
 \RequirePackage{tabularx}
+\RequirePackage[export]{adjustbox}
 
 % Pakete für Tabellen
 \RequirePackage{array}
@@ -181,7 +182,11 @@
  	\automark[section]{chapter} % automark beibehalten
  	\ihead{\kopfzeile\\\headmark}
  	\ohead{
-		\includegraphics[height=30pt]{Ohm Logo.png}%
+		\IfFileExists{Bilder/OhmLogo.png}{%
+			\includegraphics[height=30pt]{Bilder/OhmLogo.png}%
+		}{%
+			\includegraphics[height=30pt]{Bilder/OhmLogoSubst.png}%
+		}% Wenn Benutzer Ohm Logo noch nicht eingefügt hat, handgemaltes Bild
 	\hspace{5pt} \pagemark
    	 }
  	\pagestyle{scrheadings}
@@ -212,24 +217,24 @@
 \thispagestyle{empty}
 
 \ifthenelse{\equal{\deckblatt}{j}} {
-\ifthenelse{\equal{\titelbild}{}} {
-\begin{center}
-	\includegraphics[height=2cm]{VT Ohm Logo.png} \newline \newline
-	\huge \textbf \thema \\
-\vspace{0.5cm}
-	\Large \textbf \art \\
-\vspace{0.2cm}
-	\normalsize \textbf \datum
-\end{center}
-}{
+\ifthenelse{\equal{\titelbild}{}} {% Wenn kein Titelbild gegeben, default
+	\IfFileExists{Bilder/VTOhmLogo.png}{
+		\def\titelbild{Bilder/VTOhmLogo.png}
+	}{
+		\IfFileExists{Bilder/OhmLogo.png}{
+			\def\titelbild{Bilder/OhmLogo.png}
+		}{
+			\def\titelbild{Bilder/OhmLogoSubst.png}
+		}
+	}% VT Ohm Logo sonst Ohm Logo sonst handgemaltes Logo
+}{}% Ende ifthenelse Titelbild
 \begin{center}
 	\huge \textbf \thema \newline \newline
-	\includegraphics[height=10cm]{\titelbild} \newline \newline
+	\includegraphics[height=10cm, max width=0.8\textwidth]{\titelbild} \newline \newline
 	\Large \textbf \art \\
 \vspace{0.2cm}
 	\normalsize \textbf \datum
 \end{center}
-}% Ende ifthenelse Titelbild
 
 \vfill
 
