@@ -1,0 +1,16 @@
+Bilder/OhmLogo.png
+Bilder/VTOhmLogo.png
+
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.xml
+*.synctex.gz
+*.toc
+

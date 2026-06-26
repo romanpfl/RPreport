@@ -1,0 +1,73 @@
+\documentclass{RPreport}
+
+% Es kann passieren, dass die Befehle vom Textsatzprogramm (TexStudio) nicht erkannt werden
+% Dann die cwl-Datei unter C:\Users\Benutzername\AppData\Roaming\texstudio\completion\user ablegen und TeXstudio neu starten
+% Das ist optional! Normalerweise sollte die cwl-Datei automatisch generiert werden
+% Das Dokument lässt sich auch kompilieren wenn die Befehle vom Textsatzprogramm nicht erkannt werden
+
+% Text eintragen
+\Kopfzeile{z.B. Laborpraktikum ... (optional)}
+\Thema{z.B. Messung von ...}
+\Art{z.B. Bericht zum Laborpraktikum}
+\Datum{23.05.2025}
+\Gruppe{4.3.1}
+
+% Wenn Arbeit (s.u. \Arbeit):
+\Matrikelnummer{1234567}
+\Strasse{Musterstraße 1}
+\Ort{12345 Stadt}
+\EMail{name@th.de}
+\Firmenname{Beispiel GmbH}
+
+% m oder w angeben, mehrere Namen mit \newline trennen, Unterstreichen mit \underline{Name}
+\Bearbeiter{m}{Roman Pfleger}
+\Betreuer{m}{Prof. Dr.-Ing. Armin Beier}
+
+% Ja (j) / Nein (n)
+\Arbeit{n} % Projekt- oder Abschlussarbeit
+\ErsteSeiteLeer{n}
+\Deckblatt{j}
+\ZwischenSeiteLeer{n}
+\Inhaltsverzeichnis{j} % zum Aktualisieren zwei mal kompilieren
+\Abbildungsverzeichnis{j}
+\Tabellenverzeichnis{j}
+
+% Dateinamen ohne .tex eintragen oder leer lassen
+\Titelbilddatei{} % Default ist das VT-Ohm-Logo
+\Abstractdatei{Abstract}
+\Symbolverzeichnisdatei{Symbole}
+% Wenn Arbeit und gewünscht:
+\Danksagungdatei{}
+\Sperrvermerkdatei{}
+\Firmenlogodatei{}
+
+% .bib Datei eintragen
+\addbibresource{Literatur.bib}
+
+% Wenn Autorenverzeichnis:
+\Autor{Max Mustermann}{Universität Musterstadt}{max@uni.de}
+\Autor{Erika Beispiel}{Institut für Demo-Forschung}{erika@demo.org}
+
+% LaTeX-intern
+\title{Ein Beispiel mit Autorenverzeichnis in TeXstudio}
+\author{Projektteam Demo}
+\date{\today}
+
+\begin{document}
+	
+	\RPintro % stellt den ganzen Anfang zusammen
+	% Abstract und Symbole werden oben eingebunden
+	
+	\include{Einleitung}
+	\include{Kapitel 1}
+	% hier weitere Kapitel
+	\include{Zusammenfassung}
+	
+	\printbibliography[heading=bibintoc]
+	\appendix
+	\include{Anhang}
+
+	\RPoutro % stellt den ganzen Schluss zusammen
+	% Autoren werden unten eingebunden
+
+\end{document}
