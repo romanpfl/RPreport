@@ -149,7 +149,7 @@
 	\texttt{#3}\par\vspace{0.8em}}
 \newcommand{\Autor}[3]{%
 	\g@addto@macro\autorenverzeichnis{\autoreintrag{#1}{#2}{#3}}}
-\newcommand{\Autorenverzeichnis}{%
+\newcommand{\AutorenverzeichnisAn}{%
 	\section*{Autorenverzeichnis}
 	\autorenverzeichnis}
 %
@@ -166,7 +166,7 @@
 \newcommand{\ErsteSeiteLeer}[1]{\def\esl{#1}}
 \newcommand{\ZwischenSeiteLeer}[1]{\def\zsl{#1}}
 \newcommand{\Deckblatt}[1]{\def\deckblatt{#1}}
-\newcommand{\Autorenverzichnis}[1]{\def\autorenverzeichnisAnzeigen{#1}}
+\newcommand{\Autorenverzeichnis}[1]{\def\autorenverzeichnisAnzeigen{#1}}
 %
 \newcommand{\Titelbilddatei}[1]{\def\titelbild{#1}}
 \newcommand{\Abstractdatei}[1]{\def\abstract{#1}}
@@ -304,7 +304,7 @@ Tja, den Teil hab ich noch nicht geschrieben.
 % Outro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\RPoutro{
-
-\Autorenverzeichnis
-
+\ifthenelse{\equal{\autorenverzeichnisAnzeigen}{j}} {
+\AutorenverzeichnisAn
+}{}
 }% Ende RPoutro
