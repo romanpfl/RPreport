@@ -81,7 +81,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Werte
-\def\kopfzeile{} % Kopfzeile leer wenn nichts eingestellt ist
+\def\kopfzeileoben{} % Kopfzeile leer wenn nichts eingestellt ist
 \def\thema{Thema fehlt}
 \def\art{Art fehlt}
 \def\datum{Datum fehlt}
@@ -118,12 +118,15 @@
 \def\zsl{n}
 \def\deckblatt{j}
 \def\arbeit{n}
+\def\druck{n}
 \def\autorenverzeichnisAnzeigen{n}
+\def\kopfzeilean{n}
+\def\logoinkopfzeile{j}
 
 % Commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\Kopfzeile}[1]{\def\kopfzeile{#1}}
+\newcommand{\KopfzeileOben}[1]{\def\kopfzeileoben{#1}}
 \newcommand{\Thema}[1]{\def\thema{#1}}
 \newcommand{\Art}[1]{\def\art{#1}}
 \newcommand{\Datum}[1]{\def\datum{#1}}
@@ -167,6 +170,9 @@
 \newcommand{\ZwischenSeiteLeer}[1]{\def\zsl{#1}}
 \newcommand{\Deckblatt}[1]{\def\deckblatt{#1}}
 \newcommand{\Autorenverzeichnis}[1]{\def\autorenverzeichnisAnzeigen{#1}}
+\newcommand{\Kopfzeile}[1]{\def\kopfzeilean{#1}}
+\newcommand{\LogoInKopfzeile}[1]{\def\logoinkopfzeile{#1}}
+\newcommand{\Druckversion}[1]{\def\druck{#1}}
 %
 \newcommand{\Titelbilddatei}[1]{\def\titelbild{#1}}
 \newcommand{\Abstractdatei}[1]{\def\abstract{#1}}
@@ -175,32 +181,88 @@
 \newcommand{\Sperrvermerkdatei}[1]{\def\sperrvermerk{#1}}
 \newcommand{\Firmenlogodatei}[1]{\def\firmenlogo{#1}}
 
-% Kopfzeile
+% Layout: Kopfzeile, Seitenstil, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginDocument{
- 	\clearpairofpagestyles
- 	\automark[section]{chapter} % automark beibehalten
- 	\ihead{\kopfzeile\\\headmark}
- 	\ohead{
-		\IfFileExists{Bilder/OhmLogo.png}{%
-			\includegraphics[height=30pt]{Bilder/OhmLogo.png}%
-		}{%
-			\includegraphics[height=30pt]{Bilder/OhmLogoSubst.png}%
-		}% Wenn Benutzer Ohm Logo noch nicht eingefügt hat, handgemaltes Bild
-	\hspace{5pt} \pagemark
-   	 }
- 	\pagestyle{scrheadings}
+\newcommand{\InitLayout}{
+\ifthenelse{\equal{\kopfzeilean}{j}}{
+
+	\automark[section]{chapter} % automark beibehalten
+	\KOMAoptions{headsepline=true, headinclude=true}
+	\recalctypearea
+	\clearpairofpagestyles
+
+	% Abstand vor Kapitelüberschriften reduzieren
+	\renewcommand*{\chapterheadstartvskip}{\vspace*{-\dimexpr\headheight+\headsep\relax}}
+	\ohead*[\pagemark]{\pagemark}
+
+	\chead{}
+
+	\ifthenelse{\equal{\druck}{j}}{
+
+		\rehead{\leftmark}
+		\lohead{\rightmark}
+
+		% links
+		\lehead{%
+    \ifthenelse{\equal{\logoinkopfzeile}{j}}{\raisebox{5pt}{\pagemark}}{\pagemark}
+    \ifthenelse{\equal{\logoinkopfzeile}{j}}{%
+        \hspace{5pt}%
+        \IfFileExists{Bilder/OhmLogo.png}{%
+            % Wichtig: \raisebox{-Xpt}{...} gleicht die Logohöhe aus,
+            % damit die Seitenzahl auf derselben Linie sitzt.
+            \raisebox{-4pt}{\includegraphics[height=30pt]{Bilder/OhmLogo.png}}%
+        }{%
+            \raisebox{-4pt}{\includegraphics[height=30pt]{Bilder/OhmLogoSubst.png}}%
+        }%
+    }{}%
 }
 
-% Seitenstil
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\defpagestyle{ABstyle}{
-	{}{}{\hfill \pagemark}(0pt,0pt)
+		% rechts
+		\rohead{%
+    \ifthenelse{\equal{\logoinkopfzeile}{j}}{%
+        \IfFileExists{Bilder/OhmLogo.png}{%
+            \raisebox{-4pt}{\includegraphics[height=30pt]{Bilder/OhmLogo.png}}%
+        }{%
+            \raisebox{-4pt}{\includegraphics[height=30pt]{Bilder/OhmLogoSubst.png}}%
+        }%
+        \hspace{5pt}%
+    }{}%
+    \ifthenelse{\equal{\logoinkopfzeile}{j}}{\raisebox{5pt}{\pagemark}}{\pagemark}
 }
-{
-	{}{}{}
+		}{
+		\ifthenelse{\equal{\kopfzeileoben}{}}{
+			\ihead{\headmark}
+			}{
+			\ihead{\kopfzeileoben\\\headmark}
+		}
+		\ohead{
+			\ifthenelse{\equal{\logoinkopfzeile}{j}}{
+				\IfFileExists{Bilder/OhmLogo.png}{%
+					\includegraphics[height=30pt]{Bilder/OhmLogo.png}%
+				}{%
+					\includegraphics[height=30pt]{Bilder/OhmLogoSubst.png}%
+				}% Wenn Benutzer Ohm Logo noch nicht eingefügt hat, handgemaltes Bild
+				\hspace{5pt} 
+			}{}
+		\pagemark
+		}
+	}
+	\ifoot*{} \cfoot*{} \ofoot*{}
+}{
+\ihead*{} \chead*{} \ohead*{}
+\KOMAoptions{headsepline=false, headinclude=false}
+\recalctypearea
+\ifoot*{} \cfoot*{} \ofoot*{\pagemark}
 }
-\renewcommand{\chapterpagestyle}{ABstyle}
+\pagestyle{scrheadings}
+
+\ifthenelse{\equal{\druck}{j}}{
+	\KOMAoptions{twoside=true}
+	\recalctypearea
+	}{
+	\KOMAoptions{twoside=false}
+}
+}
 
 % Intro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,7 +329,7 @@
 \null}{
 }% Ende ifthenelse ZSL
 
-\pagestyle{ABstyle}
+\pagestyle{scrheadings}
 
 \ifthenelse{\equal{\abstract}{}} {
 }{
@@ -290,8 +352,6 @@
 }{
 \addchap*{Symbole} \input{\symbole} \clearpage
 }% Ende ifthenelse Abstract
-
-\pagestyle{scrheadings}
 
 }% Ende für nicht Arbeit
 {

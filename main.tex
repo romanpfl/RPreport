@@ -6,11 +6,11 @@
 % Das Dokument lässt sich auch kompilieren wenn die Befehle vom Textsatzprogramm nicht erkannt werden
 
 % Text eintragen
-\Kopfzeile{z.B. Laborpraktikum ... (optional)}
+\KopfzeileOben{z.B. Laborbericht ...}
 \Thema{z.B. Messung von ...}
 \Art{z.B. Bericht zum Laborpraktikum}
-\Datum{23.05.2025}
-\Gruppe{4.3.1}
+\Datum{\today} % kann man auch manuell reinschreiben
+\Gruppe{1.2.3}
 
 % Wenn Arbeit (s.u. \Arbeit):
 \Matrikelnummer{1234567}
@@ -21,7 +21,7 @@
 
 % m oder w angeben, mehrere Namen mit \newline trennen, Unterstreichen mit \underline{Name}
 \Bearbeiter{m}{Roman Pfleger}
-\Betreuer{m}{Prof. Dr.-Ing. Armin Beier}
+\Betreuer{m}{Prof. Dr.-Ing. Prof}
 
 % Ja (j) / Nein (n)
 \Arbeit{n} % Projekt- oder Abschlussarbeit
@@ -29,9 +29,12 @@
 \Deckblatt{j}
 \ZwischenSeiteLeer{n}
 \Inhaltsverzeichnis{j} % zum Aktualisieren zwei mal kompilieren
-\Abbildungsverzeichnis{j}
-\Tabellenverzeichnis{j}
+\Abbildungsverzeichnis{n}
+\Tabellenverzeichnis{n}
 \Autorenverzeichnis{n}
+\Kopfzeile{j}
+\LogoInKopfzeile{j}
+\Druckversion{j} % formatiert das Dokument im Duplexmodus
 
 % Dateinamen ohne .tex eintragen oder leer lassen
 \Titelbilddatei{} % Default ist das VT-Ohm-Logo
@@ -40,7 +43,7 @@
 % Wenn Arbeit und gewünscht:
 \Danksagungdatei{}
 \Sperrvermerkdatei{}
-\Firmenlogodatei{}
+\Firmenlogodatei{} % Wird auf dem Deckblattneben dem Ohm-Logo angezeigt
 
 % .bib Datei eintragen
 \addbibresource{Literatur.bib}
@@ -55,7 +58,7 @@
 \date{\today}
 
 \begin{document}
-	
+	\InitLayout % Layout initialisieren
 	\RPintro % stellt den ganzen Anfang zusammen
 	% Abstract und Symbole werden oben eingebunden
 	
