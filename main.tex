@@ -4,9 +4,12 @@
 % Dann die cwl-Datei unter C:\Users\Benutzername\AppData\Roaming\texstudio\completion\user ablegen und TeXstudio neu starten
 % Das ist optional! Normalerweise sollte die cwl-Datei automatisch generiert werden
 % Das Dokument lässt sich auch kompilieren wenn die Befehle vom Textsatzprogramm nicht erkannt werden
+% Unbenutzte Befehle können gelöscht werden
 
 % Text eintragen
+% --- Kopfzeile
 \KopfzeileOben{z.B. Laborbericht ...}
+% --- Deckblatt
 \Thema{z.B. Messung von ...}
 \Art{z.B. Bericht zum Laborpraktikum}
 \Datum{\today} % kann man auch manuell reinschreiben
@@ -21,10 +24,10 @@
 
 % m oder w angeben, mehrere Namen mit \newline trennen, Unterstreichen mit \underline{Name}
 \Bearbeiter{m}{Roman Pfleger}
-\Betreuer{m}{Prof. Dr.-Ing. Prof}
+\Betreuer{w}{Betreuerin}
 
 % Ja (j) / Nein (n)
-\Arbeit{n} % Projekt- oder Abschlussarbeit
+\Arbeit{n} % Projekt- oder Abschlussarbeit: Ändert Layout und Deckblatt
 \ErsteSeiteLeer{n}
 \Deckblatt{j}
 \ZwischenSeiteLeer{n}
@@ -34,19 +37,22 @@
 \Autorenverzeichnis{n}
 \Kopfzeile{j}
 \LogoInKopfzeile{j}
-\Druckversion{j} % formatiert das Dokument im Duplexmodus
+
+% für Arbeit:
+\Druckversion{n} % formatiert das Dokument im Duplexmodus
 
 % Dateinamen ohne .tex eintragen oder leer lassen
 \Titelbilddatei{} % Default ist das VT-Ohm-Logo
 \Abstractdatei{Abstract}
 \Symbolverzeichnisdatei{Symbole}
-% Wenn Arbeit und gewünscht:
-\Danksagungdatei{}
-\Sperrvermerkdatei{}
-\Firmenlogodatei{} % Wird auf dem Deckblattneben dem Ohm-Logo angezeigt
 
 % .bib Datei eintragen
 \addbibresource{Literatur.bib}
+
+% Wenn Arbeit:
+\Danksagungdatei{}
+\Sperrvermerkdatei{}
+\Firmenlogodatei{} % Wird auf dem Deckblattneben dem Ohm-Logo angezeigt
 
 % Wenn Autorenverzeichnis:
 \Autor{Max Mustermann}{Universität Musterstadt}{max@uni.de}
@@ -60,7 +66,7 @@
 \begin{document}
 	\InitLayout % Layout initialisieren
 	\RPintro % stellt den ganzen Anfang zusammen
-	% Abstract und Symbole werden oben eingebunden
+	% Abstract und andere Verzeichnisse werden oben eingebunden
 	
 	\include{Einleitung}
 	\include{Kapitel 1}
