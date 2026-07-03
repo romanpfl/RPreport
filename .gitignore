@@ -10,6 +10,7 @@ legacy
 *.fls
 *.lof
 *.log
+*.lol
 *.lot
 *.xml
 *.synctex.gz

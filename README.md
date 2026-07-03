@@ -11,7 +11,7 @@ Um diese Vorlage zu nutzen, benötigst du eine aktuelle LaTeX-Distribution (z. B
 Die offizielle Seite für das Ohm Logo ist: [Ohm Logo rot](https://d.th-nuernberg.de/ohm-logo-rot/)
 In diesem Dokument muss es allerdings den Namen `OhmLogo` haben und im Ordner `Bilder` liegen!
 
-> [!Info]
+> [!NOTE]
 > Ich habe neben dem Ohm-Logo auch noch das VT-spezifische Logo in `Bilder` liegen.
 > Das verwende ich einfach als Titelfoto. Es ist aber nicht notwendig.
 
@@ -34,7 +34,7 @@ Die `documentclass` ist immer `RPdoc`. Für weitere Details werden Parameter `[]
 `bericht` / `arbeit`: Unterscheidet zwischen Formatierung für Bericht oder Abschlussarbeit
 Alle weiteren Parameter sind Wahr/Falsch Werte, um bestimmte Eigenschaften zu steuern.
 
-> [!Wichtig]
+> [!IMPORTANT]
 > Die Vorlage für die Abschlussarbeit ist noch nicht fertig.
 
 ### Infos zum Kompilieren
@@ -58,7 +58,7 @@ LaTeX speichert Zwischenstände in `.aux`- und `.log`-Dateien. Lösche diese ein
 
 ---
 
-> [!Info]
+> [!TIP]
 > Es gibt auch eine LaTeX Vorlage im [repo](https://github.com/th-nuernberg/thesis-template/) der Hochschule.
 > Mir hat sie nicht gefallen, deswegen habe ich meine eigene geschrieben.
 
