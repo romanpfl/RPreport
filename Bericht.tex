@@ -1,0 +1,41 @@
+\documentclass[
+    bericht,
+    kopfzeile=true,
+    logoinkopfzeile=true
+    ]{RPdoc}
+% Diese Vorlage ist für Laborberichte
+
+% Für weibliche Form "w" in die erste Klammer
+\Autor{}{Roman Pfleger}% bzw. Verantwortlicher der Gruppe
+\Betreuer{w}{Prof oder Mitarbeiter}
+\WeitereAutoren{}{}% Wenn alle als Bearbeiter angezeigt werden sollen, \Autor leer lassen
+% Mehrere Namen mit \newline trennen, Unterstreichen mit \underline{Name}
+
+\title{Laborbericht Version 2}
+\subtitle{Ein Beispiel für einen Bericht in LaTeX}
+\date{\today}
+
+% Dateien mit Dateiendung
+\TitelbildDatei{Bilder/VTOhmLogo.png}
+\addbibresource{Literatur.bib}
+
+% Optionale Angaben
+\Gruppe{}
+\Matrikelnummer{}
+\Email{}
+\ObereKopfZeile{z.B. Laborbericht Regelungstechnik. Kann bis hier drüben gehen}
+
+\begin{document}
+\RPintro
+% \include: Abschnitt einfügen, \input: Text direkt einfügen
+\include{Text/Abstract}
+\tableofcontents
+\listoftables
+\listoffigures
+\lstlistoflistings
+\include{Text/Symbole}
+\include{Text/Einleitung}
+\printbibliography[heading=bibintoc]
+\appendix
+\include{Text/Anhang}
+\end{document}

@@ -1,4 +1,4 @@
-# RPreport: LaTeX-Vorlage für Praktikumsberichte und Abschlussarbeiten der Fak VT
+# RPreport: LaTeX-Vorlage für Praktikumsberichte und Abschlussarbeiten
 
 ## Voraussetzungen & Installation
 
@@ -8,41 +8,43 @@ Um diese Vorlage zu nutzen, benötigst du eine aktuelle LaTeX-Distribution (z. B
 2. Entpacke den Ordner auf deinem Computer.
 3. Öffne main.tex und kompiliere es. Es sollte ein pdf erzeugt werden.
 
-**Wichtig bezüglich des Ohm-Logos:** Aus rechtlichen Gründen ist das offizielle Logo der Hochschule nicht im Repository enthalten. 
-   * Lade das offizielle Logo im PNG-Format von der Website der Hochschule herunter: [Ohm Logo rot](https://d.th-nuernberg.de/ohm-logo-rot/)
-   * Benenne die Datei in `OhmLogo.png` um und speichere sie im Ordner `Bilder` ab.
-   * Auf dem Titelblatt wird standardmäßig das Ohm-Logo mit "Fakultät Verfahrenstechnik" daneben gesucht. Das muss unter dem Namen `VTOhmLogo.png` in den Bilder-Ordner. Dafür konnte ich aber keinen Link finden. Keine Sorge: Wenn du das Bild nicht hast, wird automatisch auf das Ohm Logo zurückgegriffen.
+Die offizielle Seite für das Ohm Logo ist: [Ohm Logo rot](https://d.th-nuernberg.de/ohm-logo-rot/)
+In diesem Dokument muss es allerdings den Namen `OhmLogo` haben und im Ordner `Bilder` liegen!
+
+> [!Info]
+> Ich habe neben dem Ohm-Logo auch noch das VT-spezifische Logo in `Bilder` liegen.
+> Das verwende ich einfach als Titelfoto. Es ist aber nicht notwendig.
 
 ---
 
-## Benutzung & Struktur
+## Struktur
 
 Die Struktur des Projekts ist wie folgt aufgebaut:
 
-* `main.tex` - Die Hauptdatei. Hier wird alles eingestellt. Von hier aus wird auch kompiliert.
-* `RPreport.cls` - Die Dokumentenklasse, die das gesamte Layout (Ränder, Schriftarten, Kopfzeile, Titelblatt) regelt. **(Hier nur Änderungen vornehmen, wenn du weißt, was du tust!)**
-* `Literatur.bib` - Deine Literaturdatenbank für Quellen.
-* `Bilder` - Zur Übersichtlichkeit habe ich dafür einen extra Ordner gemacht. Bei \includegraphics muss dann aber Bilder/Name.xyz geschrieben werden. Man kann die Bilder auch im      Überordner mit ablegen
-* Andere .tex Dateien werden über \include in main.tex eingebunden.
+* `Bericht.tex`: Die Vorlage für Laborberichte
+* `Arbeit.tex`: Die Vorlage für Abschlussarbeiten
+* `RPdoc.cls`: Die Klasse, die die Formatierung und Titelseite übernimmt
+* `Bilder/OhmLogo.png`: Das Ohm Logo ist notwendig
 
-## Minimaler Download
+Die anderen Dateien sind nur als Beispiel/Vorlage schon eingebaut, aber nicht notwenig.
 
-**Du kannst dir die Extra-Kapitel wie Abstract, Symbole, etc. sparen, dann musst du sie nur in der Präambel von main.tex rausnehmen.**
-Die ganz abgespeckte Version ist:
-* `main.tex`
-* `RPreport.cls`
-* `OhmLogo.png` (oder ein anderes Bild für Kopfzeile und )
+## Benutzung
 
----
+Die `documentclass` ist immer `RPdoc`. Für weitere Details werden Parameter `[]` übergeben.
+`bericht` / `arbeit`: Unterscheidet zwischen Formatierung für Bericht oder Abschlussarbeit
+Alle weiteren Parameter sind Wahr/Falsch Werte, um bestimmte Eigenschaften zu steuern.
+
+> [!Wichtig]
+> Die Vorlage für die Abschlussarbeit ist noch nicht fertig.
 
 ### Infos zum Kompilieren
 
 Die Vorlage nutzt BibLaTeX mit dem Backend **biber** für ein modernes und fehlerfreies Literaturverzeichnis. 
 
-* **Standard-Compiler:** Nutze `pdflatex` (oder `lualatex`) in Kombination mit `biber`.
+* **Standard-Compiler:** Nutze `pdflatex` (oder `lualatex`) in Kombination mit `biber`. Ich habe `TeX Live` installiert, wo das alles schon enthalten ist. `MikTeX` sollte auch funktionieren.
 * **VS Code Benutzer:** Die Erweiterung *LaTeX Workshop* erkennt die Struktur meist automatisch. Falls das Literaturverzeichnis nicht angezeigt wird, wechsle in der linken Leiste auf das LaTeX-Symbol und führe das Rezept `pdflatex -> biber -> pdflatex (x2)` oder `latexmk` aus.
-* **Fehlermeldungen nach dem Verschieben von Bildern?** Falls der Compiler alte Bildpfade cached, hilft es, die temporären Hilfsdateien zu löschen (`Clean up auxiliary files` im Editor) und neu zu bauen.
-* **Aktualisierungsfehler:** Die Hilfsdateien zu löschen ist generell eine gute Idee sobald man irgendwelche Probleme hat. Die dann einfach neu erstellen lassen.
+* **Fehlermeldungen nach dem Verschieben von Bildern?** Falls der Compiler alte Bildpfade cached, hilft es, die temporären Hilfsdateien zu löschen.
+* **Aktualisierungsfehler:** Die Hilfsdateien zu löschen ist generell eine gute Idee sobald man irgendwelche Probleme hat.
 
 ---
 
@@ -55,6 +57,10 @@ Das ist ein bewusster typografischer Standard in LaTeX (Klasse `scrreprt`). Gro�
 LaTeX speichert Zwischenstände in `.aux`- und `.log`-Dateien. Lösche diese einfach einmalig aus deinem Projektordner und kompiliere das Dokument komplett neu.
 
 ---
+
+> [!Info]
+> Es gibt auch eine LaTeX Vorlage im [repo](https://github.com/th-nuernberg/thesis-template/) der Hochschule.
+> Mir hat sie nicht gefallen, deswegen habe ich meine eigene geschrieben.
 
 ## 📄 Lizenz (MIT License)
 

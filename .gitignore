@@ -1,5 +1,6 @@
-Bilder/OhmLogo.png
-Bilder/VTOhmLogo.png
+legacy
+
+*.svg
 
 *.aux
 *.bbl
@@ -13,4 +14,3 @@ Bilder/VTOhmLogo.png
 *.xml
 *.synctex.gz
 *.toc
-
