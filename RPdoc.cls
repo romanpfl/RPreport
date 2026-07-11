@@ -28,7 +28,7 @@
 \ifRP@duplex
     \LoadClass[11pt,titlepage,twoside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
 \else
-    \LoadClass[11pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
+    \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=14]{scrreprt}
 \fi
 
 % Pakete
@@ -37,7 +37,7 @@
 \RequirePackage{amsmath}           % Mathematische Formeln und Umgebungen
 \RequirePackage{array}             % Erweiterte Funktionen für Tabellenspalten
 \RequirePackage[ngerman]{babel}    % Deutsche Sprachanpassung
-\RequirePackage[backend=biber]{biblatex} % Modernes Literaturverzeichnis
+\RequirePackage[backend=biber,style=ieee]{biblatex} % Modernes Literaturverzeichnis
 \RequirePackage{booktabs}          % Wissenschaftliche Tabellenlinien
 \RequirePackage{caption}           % Anpassung von Bild- und Tabellenunterschriften
 \RequirePackage[autostyle=true,german=quotes]{csquotes} % Kontextsensitive Anführungszeichen
@@ -58,6 +58,7 @@
 \RequirePackage{supertabular}      % Tabellen, die über mehrere Seiten brechen können
 \RequirePackage{tabularx}          % Tabellen mit dynamischer Spaltenbreite
 \RequirePackage{xcolor}            % Aktiviert Farb-Support inklusive farbiger Tabellen
+\RequirePackage{xurl}              % Zerteilen von Links erlauben
 
 \definecolor{ohmRed}{HTML}{C72426}
 
@@ -83,10 +84,18 @@
 \renewcaptionname{ngerman}{\tablename}{Tab.}
 \renewcommand*{\lstlistingname}{Code}
 
+\ifRP@kopfzeile
+    \KOMAoptions{headinclude=true}
+\else
+    \KOMAoptions{headinclude=false}
+\fi
+
 \KOMAoptions{
     captions=tableheading,  % Tabellenüberschrift
-    captions=figureheading  % Abbildungsunterschrift
+    captions=figureheading,  % Abbildungsunterschrift
+    footinclude=false
 }
+\recalctypearea
 
 % Kein Einzug im neuen Absatz
 \setlength{\parindent}{0pt}
@@ -113,6 +122,7 @@
 % Dateien
 \newcommand{\@abstractfile}{}
 \newcommand{\@coverimagefile}{}
+\newcommand{\@secondcoverlogofile}{}
 \newcommand{\@companylogofile}{}
 \newcommand{\@acknowledgementsfile}{}
 \newcommand{\@blockingnotefile}{}
@@ -145,6 +155,7 @@
 
 % Dateien
 \newcommand{\TitelbildDatei}[1]{\renewcommand{\@coverimagefile}{#1}}
+\newcommand{\ZweitesTitelLogo}[1]{\renewcommand{\@secondcoverlogofile}{#1}}
 
 % Kopfzeile
 % -------------------------------------------------------------------
@@ -184,9 +195,16 @@
             \renewcommand{\@coverimagefile}{\@ohmlogofile}
         \fi
         \begin{center}
-            \huge \textbf \@title \\
-            \vspace{0.8cm}
-            \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
+            \ifx\@secondcoverlogofile\@empty
+                \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
+            \else
+                \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
+                \hfill
+                \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
+            \fi
+            \par
+            \vspace{1cm}
+            \Huge \textbf \@title \\
             \vspace{0.8cm}
             \Large \textbf \@subtitle \\
             \vspace{0.2cm}
