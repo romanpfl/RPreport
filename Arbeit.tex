@@ -7,19 +7,26 @@
 
 % Für weibliche Form "w" in die erste Klammer
 \Autor{}{Roman Pfleger}
-\title{Abschlussarbeit Version 2}
+\title{Abschlussarbeit Version 2 - Was passiert aber, wenn der Titel sehr lang ist? Das.}
 \subtitle{Ein Beispiel für eine Abschlussarbeit in LaTeX}
 \date{\today}
 
 % Dateien mit Dateiendung
 \TitelbildDatei{Bilder/OhmLogo.png}
-\ZweitesTitelLogo{Bilder/OhmLogo.png} % Firma
+\ZweitesTitelLogo{} % Firma
 \addbibresource{Literatur.bib}
 
 % Optionale Angaben
 \Studiengang{Verfahrenstechnik}
 \Arbeitstyp{Bachelorarbeit}
 \ObereKopfZeile{}
+% darf nicht leer sein, kann aber gelöscht werden:
+% \normalsize \large \Large \LARGE \huge \Huge
+\TitelGr{\LARGE}
+\UntertitelGr{\large}
+\ChapterGr{\LARGE}
+\SectionGr{\Large}
+\SubsectionGr{\large}
 
 \usepackage{lipsum} % Löschen
 

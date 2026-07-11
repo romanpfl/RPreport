@@ -70,40 +70,6 @@
 	Bsp. pdfpages: \string\includepdf[pages=-]\string{Datei.pdf\string}
 }
 
-% Layout
-% -------------------------------------------------------------------
-\setkomafont{chapter}{\normalfont\huge\bfseries}
-\setkomafont{section}{\normalfont\Large\bfseries}
-\setkomafont{subsection}{\normalfont\large\bfseries}
-
-% Namen der Überschriften ändern
-\renewcaptionname{ngerman}{\contentsname}{Inhalt}
-\renewcaptionname{ngerman}{\listfigurename}{Abbildungen}
-\renewcaptionname{ngerman}{\listtablename}{Tabellen}
-\renewcommand*{\lstlistlistingname}{Quellcodes}
-\renewcaptionname{ngerman}{\bibname}{Literatur}
-\renewcaptionname{ngerman}{\figurename}{Abb.}
-\renewcaptionname{ngerman}{\tablename}{Tab.}
-\renewcommand*{\lstlistingname}{Code}
-
-\ifRP@kopfzeile
-    \KOMAoptions{headinclude=true,headsepline=0.4pt}
-\else
-    \KOMAoptions{headinclude=false}
-\fi
-
-\KOMAoptions{
-    captions=tableheading,  % Tabellenüberschrift
-    captions=figureheading,  % Abbildungsunterschrift
-    footinclude=false
-}
-\recalctypearea
-
-% Kein Einzug im neuen Absatz
-\setlength{\parindent}{0pt}
-
-\renewcommand*{\chapterheadstartvskip}{\vspace*{0.5cm}}
-
 % Parameter
 % -------------------------------------------------------------------
 % strings
@@ -121,6 +87,13 @@
 
 \newcommand{\@thesistype}{}
 \newcommand{\@course}{}
+
+% Schriftgrößen
+\newcommand{\@titlesize}{\LARGE}
+\newcommand{\@subtitlesize}{\large}
+\newcommand{\@chaptersize}{\LARGE}
+\newcommand{\@sectionsize}{\Large}
+\newcommand{\@subsectionsize}{\large}
 
 % Dateien
 \newcommand{\@abstractfile}{}
@@ -158,9 +131,50 @@
 \newcommand{\Arbeitstyp}[1]{\renewcommand{\@thesistype}{#1}}
 \newcommand{\Studiengang}[1]{\renewcommand{\@course}{#1}}
 
+% Optional: Schriftgrößen
+\newcommand{\TitelGr}[1]{\renewcommand{\@titlesize}{#1}}
+\newcommand{\UntertitelGr}[1]{\renewcommand{\@subtitlesize}{#1}}
+\newcommand{\ChapterGr}[1]{\renewcommand{\@chaptersize}{#1}}
+\newcommand{\SectionGr}[1]{\renewcommand{\@sectionsize}{#1}}
+\newcommand{\SubsectionGr}[1]{\renewcommand{\@subsectionsize}{#1}}
+
 % Dateien
 \newcommand{\TitelbildDatei}[1]{\renewcommand{\@coverimagefile}{#1}}
 \newcommand{\ZweitesTitelLogo}[1]{\renewcommand{\@secondcoverlogofile}{#1}}
+
+% Layout
+% -------------------------------------------------------------------
+\setkomafont{chapter}{\normalfont\@chaptersize\bfseries}
+\setkomafont{section}{\normalfont\@sectionsize\bfseries}
+\setkomafont{subsection}{\normalfont\@subsectionsize\bfseries}
+
+% Namen der Überschriften ändern
+\renewcaptionname{ngerman}{\contentsname}{Inhalt}
+\renewcaptionname{ngerman}{\listfigurename}{Abbildungen}
+\renewcaptionname{ngerman}{\listtablename}{Tabellen}
+\renewcommand*{\lstlistlistingname}{Quellcodes}
+\renewcaptionname{ngerman}{\bibname}{Literatur}
+\renewcaptionname{ngerman}{\figurename}{Abb.}
+\renewcaptionname{ngerman}{\tablename}{Tab.}
+\renewcommand*{\lstlistingname}{Code}
+
+\ifRP@kopfzeile
+    \KOMAoptions{headinclude=true,headsepline=0.4pt}
+\else
+    \KOMAoptions{headinclude=false}
+\fi
+
+\KOMAoptions{
+    captions=tableheading,  % Tabellenüberschrift
+    captions=figureheading,  % Abbildungsunterschrift
+    footinclude=false
+}
+\recalctypearea
+
+% Kein Einzug im neuen Absatz
+\setlength{\parindent}{0pt}
+
+\renewcommand*{\chapterheadstartvskip}{\vspace*{0.5cm}}
 
 % Kopfzeile
 % -------------------------------------------------------------------
@@ -215,14 +229,14 @@
         \fi
         \begin{center}
             \ifx\@secondcoverlogofile\@empty
-                \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
+                \includegraphics[height=2cm]{\@coverimagefile} \\
             \else
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
                 \hfill
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
             \fi
             \par
-            \vspace{2cm}
+            \vspace{1cm}
             \large Technische Hochschule Nürnberg Georg Simon Ohm \\
             Fakultät Verfahrenstechnik \\
             \ifx\@course\@empty\else
@@ -231,11 +245,9 @@
             \vspace{0.5cm}
             \@thesistype \\
             \vspace{1cm}
-            \huge \textbf \@title \\
+            \@titlesize \textbf \@title \\
             \vspace{1cm}
-            \large \textbf \@subtitle \\
-            \vspace{0.5cm}
-            \normalsize \textbf \@date
+            \@subtitlesize \textbf \@subtitle
         \end{center}
         \vfill
     
@@ -258,9 +270,9 @@
             \fi
             \par
             \vspace{1cm}
-            \Huge \textbf \@title \\
+            \@titlesize \textbf \@title \\
             \vspace{0.8cm}
-            \Large \textbf \@subtitle \\
+            \@subtitlesize \textbf \@subtitle \\
         \end{center}
 
         \vfill
