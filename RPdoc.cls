@@ -14,7 +14,7 @@
 % Optionen
 % -------------------------------------------------------------------
 \DeclareBoolOption[true]{kopfzeile}
-\DeclareBoolOption[true]{logoinkopfzeile}
+\DeclareBoolOption[false]{logoinkopfzeile}
 \DeclareBoolOption[false]{duplex}
 
 \newbool{isthesis}
@@ -26,9 +26,11 @@
 
 % Basis-Klasse laden
 \ifRP@duplex
-    \LoadClass[11pt,titlepage,twoside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
+    \LoadClass[12pt,titlepage,twoside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
 \else
-    \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=14]{scrreprt}
+    \ifbool{isthesis}{%
+        \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=12]{scrreprt}}{% soll zu twoside passen
+        \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=14]{scrreprt}}
 \fi
 
 % Pakete
@@ -36,7 +38,7 @@
 \RequirePackage[export]{adjustbox} % Erweitert \includegraphics
 \RequirePackage{amsmath}           % Mathematische Formeln und Umgebungen
 \RequirePackage{array}             % Erweiterte Funktionen für Tabellenspalten
-\RequirePackage[ngerman]{babel}    % Deutsche Sprachanpassung
+\RequirePackage[english,ngerman]{babel} % Sprachanpassung
 \RequirePackage[backend=biber,style=ieee]{biblatex} % Modernes Literaturverzeichnis
 \RequirePackage{booktabs}          % Wissenschaftliche Tabellenlinien
 \RequirePackage{caption}           % Anpassung von Bild- und Tabellenunterschriften
@@ -85,7 +87,7 @@
 \renewcommand*{\lstlistingname}{Code}
 
 \ifRP@kopfzeile
-    \KOMAoptions{headinclude=true}
+    \KOMAoptions{headinclude=true,headsepline=0.4pt}
 \else
     \KOMAoptions{headinclude=false}
 \fi
@@ -104,9 +106,6 @@
 
 % Parameter
 % -------------------------------------------------------------------
-% bools
-\newbool{logoinheader}
-
 % strings
 \newcommand{\@headertopline}{}
 \newcommand{\@supervisor}{}
@@ -120,6 +119,9 @@
 \newcommand{\@responsiblepref}{Verantwortlicher}
 \newtoks\@additionallines
 
+\newcommand{\@thesistype}{}
+\newcommand{\@course}{}
+
 % Dateien
 \newcommand{\@abstractfile}{}
 \newcommand{\@coverimagefile}{}
@@ -128,8 +130,6 @@
 \newcommand{\@acknowledgementsfile}{}
 \newcommand{\@blockingnotefile}{}
 \newcommand{\@ohmlogofile}{Bilder/OhmLogo.png}
-
-% Andere
 
 % Commands
 % -------------------------------------------------------------------
@@ -155,44 +155,96 @@
 \newcommand{\ObereKopfZeile}[1]{\renewcommand{\@headertopline}{#1}}
 \newcommand{\ZusaetzlicheTitelListenZeilen}[1]{\@additionallines={#1}}
 
+\newcommand{\Arbeitstyp}[1]{\renewcommand{\@thesistype}{#1}}
+\newcommand{\Studiengang}[1]{\renewcommand{\@course}{#1}}
+
 % Dateien
 \newcommand{\TitelbildDatei}[1]{\renewcommand{\@coverimagefile}{#1}}
 \newcommand{\ZweitesTitelLogo}[1]{\renewcommand{\@secondcoverlogofile}{#1}}
 
 % Kopfzeile
 % -------------------------------------------------------------------
-\ifRP@kopfzeile
-    \automark{chapter}
-    \ifbool{isthesis}{%
-        % Mach ich später
-    }{%
-        \pagestyle{scrheadings}
-        \clearpairofpagestyles
-        
-        \ihead{\@headertopline \\ \headmark}
-        \chead{}
-        \ohead{%
-            \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
-                \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
-                \hspace{0.5em}}{%
-            }
-        \pagemark
+\newcommand{\simpleheader}{%
+    \automark{chapter}    
+
+    \ihead{\@headertopline \\ \headmark}
+    \chead{}
+    \ohead{%
+        \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
+            \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
+            \hspace{0.5em}}{%
         }
-        
-        \KOMAoptions{headsepline=0.4pt}
+    \pagemark
     }%
+}%
+
+\ifRP@kopfzeile
+    \pagestyle{scrheadings}
+    \clearpairofpagestyles
+    
+    \ifbool{isthesis}{%
+        \ifRP@duplex 
+            \automark[section]{chapter}
+            \ihead[]{\@headertopline \\ \headmark}
+            \chead{}
+            \ohead[]{%
+                \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
+                    \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
+                    \hspace{0.5em}%
+                }{}%
+                \pagemark
+            }%
+        \else % wenn nicht duplex
+            \simpleheader
+        \fi
+    }{\simpleheader} % wenn nicht Arbeit
 \else
-    \pagestyle{plain}
+    \pagestyle{plain} % wenn keine Kopfzeile
 \fi
 
 % Intro
 % -------------------------------------------------------------------
 \newcommand{\RPintro}{%
+    % Arbeit
+    % ---------------------------------------------------------------
     \ifbool{isthesis}{%
-        % mache ich später
+        % Titelseite
+        \thispagestyle{empty}
+        \ifx\@coverimagefile\@empty
+            \renewcommand{\@coverimagefile}{\@ohmlogofile}
+        \fi
+        \begin{center}
+            \ifx\@secondcoverlogofile\@empty
+                \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
+            \else
+                \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
+                \hfill
+                \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
+            \fi
+            \par
+            \vspace{2cm}
+            \large Technische Hochschule Nürnberg Georg Simon Ohm \\
+            Fakultät Verfahrenstechnik \\
+            \ifx\@course\@empty\else
+                Studiengang \@course \\
+            \fi
+            \vspace{0.5cm}
+            \@thesistype \\
+            \vspace{1cm}
+            \huge \textbf \@title \\
+            \vspace{1cm}
+            \large \textbf \@subtitle \\
+            \vspace{0.5cm}
+            \normalsize \textbf \@date
+        \end{center}
+        \vfill
+    
+    % Bericht
+    % ---------------------------------------------------------------
     }{%
         % Titelseite
         \thispagestyle{empty}
+        \enlargethispage{5cm}
         \ifx\@coverimagefile\@empty
             \renewcommand{\@coverimagefile}{\@ohmlogofile}
         \fi
@@ -209,8 +261,6 @@
             \Huge \textbf \@title \\
             \vspace{0.8cm}
             \Large \textbf \@subtitle \\
-            \vspace{0.2cm}
-            \normalsize \textbf \@date
         \end{center}
 
         \vfill
@@ -250,6 +300,6 @@
              & \hfill (\@responsiblepref) \hfill
             \fi
         \end{tabularx}
+        \newpage
     }%
-    \newpage
 }%

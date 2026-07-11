@@ -1,1 +1,61 @@
+\documentclass[
+    arbeit,
+    kopfzeile=true,
+    duplex=false % macht man bei Druckversionen
+    ]{RPdoc}
 % Diese Vorlage ist für Abschlussarbeiten
+
+% Für weibliche Form "w" in die erste Klammer
+\Autor{}{Roman Pfleger}
+\title{Abschlussarbeit Version 2}
+\subtitle{Ein Beispiel für eine Abschlussarbeit in LaTeX}
+\date{\today}
+
+% Dateien mit Dateiendung
+\TitelbildDatei{Bilder/OhmLogo.png}
+\ZweitesTitelLogo{Bilder/OhmLogo.png} % Firma
+\addbibresource{Literatur.bib}
+
+% Optionale Angaben
+\Studiengang{Verfahrenstechnik}
+\Arbeitstyp{Bachelorarbeit}
+\ObereKopfZeile{}
+
+\usepackage{lipsum} % Löschen
+
+\begin{document}
+\RPintro
+% Der untere Teil ist, weil das gefühlt jeder anders macht, benutzerdefiniert. Hier eine Vorlage.
+\begin{center}
+\begin{tabularx}{\textwidth}{@{} r X @{}}
+    Vorgelegt von: & Roman Pfleger \\
+    & pflegerro@th-nuernberg.de \\
+    \\
+    Matrikelnummer: & 1234567 \\
+    \\
+    Abgabedatum: & hoffentlich nicht \today \\
+    \\
+    Erstgutachter: & Der Erstkorrektor \\
+    Zweitgutachter: & Zweitkorrekur \\
+    \\
+    In Zusammenarbeit mit: & ProLeiT GmbH, Herzogenaurach \\
+    & (Ein Unternehmen der Schneider Electric Gruppe) \\
+    Betreuer: & Bräuchte ich mal langsam einen
+\end{tabularx}
+\end{center}
+
+% \include: Abschnitt einfügen, \input: Text direkt einfügen
+%\include{Text/Abstract}
+%\tableofcontents
+%\listoftables
+%\listoffigures
+%\lstlistoflistings
+\chapter{Demo für Duplex-Kopfzeile}
+\section{Headmark auf ungeraden Seiten: Section}
+\lipsum \\ \\ und nochmal \\ \\ \lipsum
+\include{Text/Symbole}
+\include{Text/Einleitung}
+\printbibliography[heading=bibintoc]
+\appendix
+\include{Text/Anhang}
+\end{document}
