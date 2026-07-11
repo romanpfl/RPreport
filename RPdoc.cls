@@ -118,6 +118,7 @@
 \newcommand{\@supervisorpref}{Betreuer}
 \newcommand{\@otherauthorspref}{Bearbeiter}
 \newcommand{\@responsiblepref}{Verantwortlicher}
+\newtoks\@additionallines
 
 % Dateien
 \newcommand{\@abstractfile}{}
@@ -152,6 +153,7 @@
 \newcommand{\Email}[1]{\renewcommand{\@email}{#1}}
 \newcommand{\Gruppe}[1]{\renewcommand{\@group}{#1}}
 \newcommand{\ObereKopfZeile}[1]{\renewcommand{\@headertopline}{#1}}
+\newcommand{\ZusaetzlicheTitelListenZeilen}[1]{\@additionallines={#1}}
 
 % Dateien
 \newcommand{\TitelbildDatei}[1]{\renewcommand{\@coverimagefile}{#1}}
@@ -233,7 +235,11 @@
             \ifx\@email\@empty\else 
                 E-Mail: & \@email \\ 
             \fi
-            \@supervisorpref : & \@supervisor \\
+            \ifx\@supervisor\@empty\else
+                \@supervisorpref : & \@supervisor \\
+            \fi
+
+            \the\@additionallines
         \end{tabularx}
 
         \vspace{1cm}
