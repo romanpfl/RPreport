@@ -224,24 +224,20 @@
     \ifbool{isthesis}{%
         % Titelseite
         \thispagestyle{empty}
-        \ifx\@coverimagefile\@empty
-            \renewcommand{\@coverimagefile}{\@ohmlogofile}
-        \fi
+        \ifdefempty{\@coverimagefile}{\renewcommand{\@coverimagefile}{\@ohmlogofile}}{}%
         \begin{center}
-            \ifx\@secondcoverlogofile\@empty
+            \ifdefempty{\@secondcoverlogofile}{%
                 \includegraphics[height=2cm]{\@coverimagefile} \\
-            \else
+            }{%
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
                 \hfill
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
-            \fi
+            }%
             \par
             \vspace{1cm}
             \large Technische Hochschule Nürnberg Georg Simon Ohm \\
             Fakultät Verfahrenstechnik \\
-            \ifx\@course\@empty\else
-                Studiengang \@course \\
-            \fi
+            \ifdefempty{\@course}{}{Studiengang \@course \\}
             \vspace{0.5cm}
             \@thesistype \\
             \vspace{1cm}
@@ -257,17 +253,15 @@
         % Titelseite
         \thispagestyle{empty}
         \enlargethispage{5cm}
-        \ifx\@coverimagefile\@empty
-            \renewcommand{\@coverimagefile}{\@ohmlogofile}
-        \fi
+        \ifdefempty{\@coverimagefile}{\renewcommand{\@coverimagefile}{\@ohmlogofile}}{}%
         \begin{center}
-            \ifx\@secondcoverlogofile\@empty
+            \ifdefempty{\@secondcoverlogofile}{%
                 \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
-            \else
+            }{%
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
                 \hfill
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
-            \fi
+            }%
             \par
             \vspace{1cm}
             \@titlesize \textbf \@title \\
@@ -278,28 +272,22 @@
         \vfill
 
         \begin{tabularx}{\textwidth}{@{} r X @{}}
-            \ifx\@group\@empty
+            \ifdefempty{\@group}{%
                 \@authorpref : & \@author \\
-            \else
-                Gruppe: & \@group \\ 
-                \ifx\@otherauthors\@empty % stehen wohl alle in author
+            }{%
+                Gruppe: & \@group \\
+                \ifdefempty{\@otherauthors}{% stehen wohl alle in author
                     \@authorpref : & \@author \\
-                \else
-                    \ifdefempty{\@author}{}{% ifx hat hier gebuggt, keine Ahnung warum
+                }{%
+                    \ifdefempty{\@author}{}{%
                         \@responsiblepref : & \@author \\
                     }%
                     \@otherauthorspref : & \@otherauthors \\
-                \fi
-            \fi
-            \ifx\@studentnumber\@empty\else 
-                Matrikelnummer: & \@studentnumber \\ 
-            \fi
-            \ifx\@email\@empty\else 
-                E-Mail: & \@email \\ 
-            \fi
-            \ifx\@supervisor\@empty\else
-                \@supervisorpref : & \@supervisor \\
-            \fi
+                }%
+            }%
+            \ifdefempty{\@studentnumber}{}{Matrikelnummer: & \@studentnumber \\}
+            \ifdefempty{\@email}{}{E-Mail: & \@email \\}
+            \ifdefempty{\@supervisor}{}{\@supervisorpref : & \@supervisor \\}
 
             \the\@additionallines
         \end{tabularx}
@@ -308,10 +296,11 @@
 
         \begin{tabularx}{\textwidth}{@{} X X r @{}}
             Ort, Datum: \dotfill	& Unterschrift: \dotfill \\
-            \ifx\@group\@empty\else 
-             & \hfill (\@responsiblepref) \hfill
-            \fi
+            \ifdefempty{\@group}{}{ & \hfill (\@responsiblepref) \hfill}
         \end{tabularx}
+
+        \vspace{3cm} % sonst macht das vfill Faxen
+
         \newpage
     }%
 }%
