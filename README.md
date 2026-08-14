@@ -81,6 +81,16 @@ Die Vorlage nutzt BibLaTeX mit dem Backend **biber** für ein modernes und fehle
 
 ## Quick Start Guide
 
+1. Den gesamten Ordner ins Zielverzeichnis kopieren
+2. Für Dokument `Bericht.tex` oder `Arbeit.tex` entscheiden (ggf. umbenennen)
+3. Klassenattibute (`[ ]`) übergeben
+4. Pflichtangaben in der Präambel machen (`{ }`)
+5. Dokument erstellen
+> Das muss funktionieren! Ansonsten passt noch etwas mit der Umgebung nicht, z.B. Textsatzprogramm schaut auf falsche Datei, falschen Ordner, etc. oder es wurden Pflichtangaben vergessen.
+> Diese sind vor allem in den `[ ]`, aber auch Autor, Titel, Datum
+6. Optionale Angaben durchsehen
+7. Weitere Textdateien anlegen und im Dokument einbinden
+
 > [!TIP]
 > Wenn du keine Option findest mit der du zufrieden bist, kannst du auch jederzeit die Einstellungen in der Präambel (vor `\begin{document}`) mit Commands wie `\renewcommand` überschreiben.
 > Also Schriftgröße, Schriftart, Seiten- oder Zeilenabstände etc.
