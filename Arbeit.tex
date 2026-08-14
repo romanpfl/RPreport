@@ -1,7 +1,10 @@
 \documentclass[
     arbeit,
+    zitierstil=iso690alp, % ieee, iso690num, iso690alp, iso690har (IEEE oder DIN EN ISO 690: Numerisch, Alphabetisch, Harvard)
     kopfzeile=true,
-    duplex=false % macht man bei Druckversionen
+    duplex=false, % macht man bei Druckversionen
+    kopfzeilebeititel=true,
+    listtotoc=true % damit Abbildungsverzeichnis und Tabellenverzeichnis im Inhaltsverzeichnis erscheinen
     ]{RPdoc}
 % Diese Vorlage ist für Abschlussarbeiten
 
@@ -11,8 +14,8 @@
 \subtitle{Ein Beispiel für eine Abschlussarbeit in LaTeX}
 \date{\today}
 
-% Dateien mit Dateiendung
-\TitelbildDatei{Bilder/OhmLogo.png}
+% Dateien mit Dateiendung (optional)
+\TitelbildDatei{}
 \ZweitesTitelLogo{} % Firma
 \addbibresource{Literatur.bib}
 
@@ -20,13 +23,6 @@
 \Studiengang{Verfahrenstechnik}
 \Arbeitstyp{Bachelorarbeit}
 \ObereKopfZeile{}
-% darf nicht leer sein, kann aber gelöscht werden:
-% \normalsize \large \Large \LARGE \huge \Huge
-\TitelGr{\LARGE}
-\UntertitelGr{\large}
-\ChapterGr{\LARGE}
-\SectionGr{\Large}
-\SubsectionGr{\large}
 
 \usepackage{lipsum} % Löschen
 

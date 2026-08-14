@@ -1,7 +1,10 @@
 \documentclass[
     bericht,
+    zitierstil=ieee, % ieee, iso690num, iso690alp, iso690har (IEEE oder DIN EN ISO 690: Numerisch, Alphabetisch, Harvard)
     kopfzeile=true,
-    logoinkopfzeile=true
+    logoinkopfzeile=true,
+    kopfzeilebeititel=false,
+    listtotoc=true % damit Abbildungsverzeichnis und Tabellenverzeichnis im Inhaltsverzeichnis erscheinen
     ]{RPdoc}
 % Diese Vorlage ist für Berichte
 
@@ -16,9 +19,9 @@
 \subtitle{Ein Beispiel für einen Bericht in LaTeX}
 \date{\today}
 
-% Dateien mit Dateiendung
+% Dateien mit Dateiendung (optional)
 \TitelbildDatei{Bilder/VTOhmLogo.png}
-\ZweitesTitelLogo{} % optional
+\ZweitesTitelLogo{}
 \addbibresource{Literatur.bib}
 
 % Optionale Angaben
@@ -27,13 +30,6 @@
 \Email{}
 \ObereKopfZeile{z.B. Laborbericht Regelungstechnik}
 \ZusaetzlicheTitelListenZeilen{Hier kann: & man noch mehr \\ Zeilen in & diesem Format angeben \\}
-% darf nicht leer sein, kann aber gelöscht werden:
-% \normalsize \large \Large \LARGE \huge \Huge
-\TitelGr{\LARGE}
-\UntertitelGr{\large}
-\ChapterGr{\LARGE}
-\SectionGr{\Large}
-\SubsectionGr{\large}
 
 \begin{document}
 \RPintro
