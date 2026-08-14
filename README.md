@@ -31,8 +31,10 @@ Um diese Vorlage zu nutzen, benötigst du eine aktuelle LaTeX-Distribution (z. B
 3. Öffne main.tex und kompiliere es. Es sollte ein pdf erzeugt werden.
 
 > [!CAUTION]
+> An manchen Stellen wird das Ohm Logo erwartet, z.B. wenn man einstellt, dass das Logo in der Kopfzeile erscheinen soll.
 > Ich darf das Ohm-Logo hier nicht veröffentlichen, das muss aber im Order `Bilder` als `OhmLogo.png` liegen!
 > Bitte lade dir das Logo von der [offiziellen Seite](https://d.th-nuernberg.de/ohm-logo-rot/) der TH runter und lege es umbenannt dort ab!
+> Als Platzhalter ist das RPdoc Logo hinterlegt. Solange das existiert sollte sich das Dokument ohne Fehler erstellen lassen!
 
 > [!NOTE]
 > Ich habe neben dem Ohm Logo auch noch das VT-spezifische Ohm Logo in `Bilder` liegen.

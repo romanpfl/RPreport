@@ -111,7 +111,7 @@
 \newcommand{\@companylogofile}{}
 \newcommand{\@acknowledgementsfile}{}
 \newcommand{\@blockingnotefile}{}
-\newcommand{\@ohmlogofile}{Bilder/OhmLogo.png}
+\newcommand{\@ohmlogofile}{Bilder/RPdoc.png}
 
 % Commands
 % -------------------------------------------------------------------
@@ -149,6 +149,7 @@
 \newcommand{\SubsectionGr}[1]{\renewcommand{\@subsectionsize}{#1}}
 
 % Dateien
+\newcommand{\OhmLogoDatei}[1]{\renewcommand{\@ohmlogofile}{#1}}
 \newcommand{\TitelbildDatei}[1]{\renewcommand{\@coverimagefile}{#1}}
 \newcommand{\ZweitesTitelLogo}[1]{\renewcommand{\@secondcoverlogofile}{#1}}
 
