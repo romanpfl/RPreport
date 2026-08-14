@@ -1,7 +1,7 @@
 <div align="center">
 
   <!-- Logo -->
-  <img src="Bilder/RPdoc.png" alt="RPdoc Logo" height="110">
+  <img src="Bilder/RPdoc.png" alt="RPdoc Logo" height="100">
 
   # RPdoc – LaTeX Document Class
 
@@ -42,6 +42,20 @@ Um diese Vorlage zu nutzen, benötigst du eine aktuelle LaTeX-Distribution (z. B
 
 ---
 
+## Quick Start Guide
+
+1. Den gesamten Ordner ins Zielverzeichnis kopieren
+2. Für Dokument `Bericht.tex` oder `Arbeit.tex` entscheiden (ggf. umbenennen)
+3. Klassenattibute (`[ ]`) übergeben
+4. Pflichtangaben in der Präambel machen (`{ }`)
+5. Dokument erstellen
+> Das muss funktionieren! Ansonsten passt noch etwas mit der Umgebung nicht, z.B. Textsatzprogramm schaut auf falsche Datei, falschen Ordner, etc. oder es wurden Pflichtangaben vergessen.
+> Diese sind vor allem in den `[ ]`, aber auch Autor, Titel, Datum
+6. Optionale Angaben durchsehen
+7. Weitere Textdateien anlegen und im Dokument einbinden
+
+---
+
 ## Struktur
 
 Die Struktur des Projekts ist wie folgt aufgebaut:
@@ -52,6 +66,8 @@ Die Struktur des Projekts ist wie folgt aufgebaut:
 * `Bilder/OhmLogo.png`: Das Ohm Logo ist notwendig
 
 Die anderen Dateien sind nur als Beispiel/Vorlage schon eingebaut, aber nicht notwenig.
+
+---
 
 ## Benutzung
 
@@ -65,7 +81,9 @@ Es gibt aber auch weiter unten noch Befehle, mit denen Anpassungen gemacht werde
 > Wenn das aber unverständlich ist, kann man noch einen Blick ins Compiler-Log werfen.
 > Um nachzuvollziehen, was die Klasse macht, kann man im Dokument nach "RPdocDEBUG" suchen.
 
-### Infos zum Kompilieren
+---
+
+### Infos zum Erstellen
 
 Die Vorlage nutzt BibLaTeX mit dem Backend **biber** für ein modernes und fehlerfreies Literaturverzeichnis. 
 
@@ -75,28 +93,14 @@ Die Vorlage nutzt BibLaTeX mit dem Backend **biber** für ein modernes und fehle
 
 ---
 
-> [!TIP]
-> Es gibt auch eine LaTeX Vorlage im [repo](https://github.com/th-nuernberg/thesis-template/) der Hochschule.
-> Mir hat sie nicht gefallen, deswegen habe ich meine eigene geschrieben.
-
-## Quick Start Guide
-
-1. Den gesamten Ordner ins Zielverzeichnis kopieren
-2. Für Dokument `Bericht.tex` oder `Arbeit.tex` entscheiden (ggf. umbenennen)
-3. Klassenattibute (`[ ]`) übergeben
-4. Pflichtangaben in der Präambel machen (`{ }`)
-5. Dokument erstellen
-> Das muss funktionieren! Ansonsten passt noch etwas mit der Umgebung nicht, z.B. Textsatzprogramm schaut auf falsche Datei, falschen Ordner, etc. oder es wurden Pflichtangaben vergessen.
-> Diese sind vor allem in den `[ ]`, aber auch Autor, Titel, Datum
-6. Optionale Angaben durchsehen
-7. Weitere Textdateien anlegen und im Dokument einbinden
-
-> [!TIP]
-> Wenn du keine Option findest mit der du zufrieden bist, kannst du auch jederzeit die Einstellungen in der Präambel (vor `\begin{document}`) mit Commands wie `\renewcommand` überschreiben.
-> Also Schriftgröße, Schriftart, Seiten- oder Zeilenabstände etc.
-
 > #### Hinweis
 > Es gibt optionale Befehle wie `\TitelGr{}` die in den Vorlagen nicht verwendet werden, aber eingefügt werden können.
 > Mit `\TitelGr{\LARGE}` kann man die Titelgröße anpassen.
 > Entsprechend `\UntertitelGr{\large}`,`\ChapterGr{\LARGE}`, `\SectionGr{\Large}` und `\SubsectionGr{\large}`
 > Verfügbare Größen: `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`. Das Feld darf nicht leer sein.
+
+Wenn du keine Option findest mit der du zufrieden bist, kannst du auch jederzeit die Einstellungen in der Präambel (vor `\begin{document}`) mit Commands wie `\renewcommand` überschreiben.
+Also Schriftgröße, Schriftart, Seiten- oder Zeilenabstände etc.
+
+Es gibt auch eine LaTeX Vorlage im [repo](https://github.com/th-nuernberg/thesis-template/) der Hochschule.
+Mir hat sie nicht gefallen, deswegen habe ich meine eigene geschrieben.

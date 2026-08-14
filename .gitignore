@@ -3,6 +3,8 @@ legacy
 OhmLogo.png
 VTOhmLogo.png
 
+*.pdf
+
 *.svg
 
 *.aux
