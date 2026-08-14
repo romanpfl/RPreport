@@ -1,9 +1,10 @@
 \documentclass[
     arbeit,
     zitierstil=iso690alp, % ieee, iso690num, iso690alp, iso690har (IEEE oder DIN EN ISO 690: Numerisch, Alphabetisch, Harvard)
+    zeilenabstand=1.15, %(normalerweise 1.15 oder 1.3)
     kopfzeile=true,
     duplex=false, % macht man bei Druckversionen
-    kopfzeilebeititel=true,
+    kopfzeilebeititel=false,
     listtotoc=true % damit Abbildungsverzeichnis und Tabellenverzeichnis im Inhaltsverzeichnis erscheinen
     ]{RPdoc}
 % Diese Vorlage ist für Abschlussarbeiten
@@ -54,8 +55,6 @@
 %\listoffigures
 %\lstlistoflistings
 \pagenumbering{arabic}
-\chapter{Demo für Duplex-Kopfzeile}
-\section{Headmark auf ungeraden Seiten: Section}
 \include{Text/Symbole}
 \include{Text/Einleitung}
 \printbibliography[heading=bibintoc]

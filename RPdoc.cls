@@ -1,15 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{RPdoc}[2026/07/03 Template for different documents]
+\ProvidesClass{RPdoc}[14.08.2026 Template for different documents]
 
 % Setup
 % -------------------------------------------------------------------
 \RequirePackage{etoolbox}
 \RequirePackage{kvoptions}
 
-\SetupKeyvalOptions{
-    family=RP,
-    prefix=RP@
-}
+\SetupKeyvalOptions{family=RP,prefix=RP@}
 
 % Optionen
 % -------------------------------------------------------------------
@@ -19,6 +16,7 @@
 \DeclareBoolOption[false]{duplex}
 \DeclareBoolOption[true]{listtotoc}
 \DeclareStringOption[ieee]{zitierstil}
+\DeclareStringOption[1.15]{zeilenabstand}
 
 \newbool{isthesis}
 \DeclareVoidOption{bericht}{\boolfalse{isthesis}}
@@ -29,11 +27,11 @@
 
 % Basis-Klasse laden
 \ifRP@duplex
-    \LoadClass[12pt,titlepage,twoside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
+    \LoadClass[11pt,titlepage,twoside,numbers=noenddot,a4paper,DIV=12]{scrreprt}
 \else
     \ifbool{isthesis}{%
-        \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=12]{scrreprt}}{% soll zu twoside passen
-        \LoadClass[12pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=14]{scrreprt}}
+        \LoadClass[11pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=12]{scrreprt}}{% soll zu twoside passen
+        \LoadClass[11pt,titlepage,oneside,numbers=noenddot,a4paper,DIV=14]{scrreprt}}
 \fi
 
 % Pakete
@@ -63,6 +61,13 @@
 \RequirePackage{tabularx}          % Tabellen mit dynamischer Spaltenbreite
 \RequirePackage{xcolor}            % Aktiviert Farb-Support inklusive farbiger Tabellen
 \RequirePackage{xurl}              % Zerteilen von Links erlauben
+
+% geometry
+\ifRP@kopfzeile
+    \RequirePackage[top=2cm,right=2cm,bottom=3cm,left=3cm,includehead]{geometry}
+\else
+    \RequirePackage[top=2cm,right=2cm,bottom=3cm,left=3cm]{geometry}
+\fi
 
 % Biblatex je nach Zitierstil
 \ifdefstring{\RP@zitierstil}{ieee}{\RequirePackage[backend=biber, style=ieee, citestyle=numeric-comp]{biblatex}}{}%
@@ -157,9 +162,17 @@
 % -------------------------------------------------------------------
 \typeout{RPdocDEBUG: Starte Layout}
 
-\setkomafont{chapter}{\normalfont\@chaptersize\bfseries}
-\setkomafont{section}{\normalfont\@sectionsize\bfseries}
-\setkomafont{subsection}{\normalfont\@subsectionsize\bfseries}
+\setkomafont{chapter}{\fontsize{14pt}{17pt}\selectfont\bfseries}
+\setkomafont{section}{\fontsize{12pt}{15pt}\selectfont\bfseries}
+\setkomafont{subsection}{\fontsize{11pt}{14pt}\selectfont\bfseries}
+\setkomafont{subsubsection}{\fontsize{11pt}{14pt}\selectfont\bfseries}
+
+\RedeclareSectionCommand[beforeskip=12pt,afterskip=12pt]{chapter}
+\RedeclareSectionCommand[beforeskip=12pt,afterskip=6pt]{section}
+\RedeclareSectionCommand[beforeskip=12pt,afterskip=6pt]{subsection}
+\RedeclareSectionCommand[beforeskip=12pt,afterskip=6pt]{subsubsection}
+
+\setstretch{\RP@zeilenabstand}
 
 % Namen der Überschriften ändern
 \renewcaptionname{ngerman}{\contentsname}{Inhalt}
@@ -190,7 +203,7 @@
 \KOMAoptions{
     captions=tableheading,  % Tabellenüberschrift
     captions=figureheading,  % Abbildungsunterschrift
-    footinclude=false
+    parskip=half,
 }
 \recalctypearea
 
