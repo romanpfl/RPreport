@@ -18,6 +18,7 @@
 \DeclareBoolOption[false]{logoinkopfzeile}
 \DeclareBoolOption[false]{duplex}
 \DeclareBoolOption[true]{listtotoc}
+\DeclareStringOption[ieee]{zitierstil}
 
 \newbool{isthesis}
 \DeclareVoidOption{bericht}{\boolfalse{isthesis}}
@@ -41,7 +42,6 @@
 \RequirePackage{amsmath}           % Mathematische Formeln und Umgebungen
 \RequirePackage{array}             % Erweiterte Funktionen für Tabellenspalten
 \RequirePackage[english,ngerman]{babel} % Sprachanpassung
-\RequirePackage[backend=biber,style=ieee]{biblatex} % Modernes Literaturverzeichnis
 \RequirePackage{booktabs}          % Wissenschaftliche Tabellenlinien
 \RequirePackage{caption}           % Anpassung von Bild- und Tabellenunterschriften
 \RequirePackage[autostyle=true,german=quotes]{csquotes} % Kontextsensitive Anführungszeichen
@@ -63,6 +63,13 @@
 \RequirePackage{tabularx}          % Tabellen mit dynamischer Spaltenbreite
 \RequirePackage{xcolor}            % Aktiviert Farb-Support inklusive farbiger Tabellen
 \RequirePackage{xurl}              % Zerteilen von Links erlauben
+
+% Biblatex je nach Zitierstil
+\ifdefstring{\RP@zitierstil}{ieee}{\RequirePackage[backend=biber, style=ieee, citestyle=numeric-comp]{biblatex}}{}%
+\ifdefstring{\RP@zitierstil}{iso690num}{\RequirePackage[backend=biber, style=iso-numeric, autolang=other]{biblatex}}{}%
+\ifdefstring{\RP@zitierstil}{iso690alp}{\RequirePackage[backend=biber, style=iso-alphabetic, autolang=other]{biblatex}}{}%
+\ifdefstring{\RP@zitierstil}{iso690har}{\RequirePackage[backend=biber, style=iso-authoryear, autolang=other]{biblatex}}{}%
+
 
 \definecolor{ohmRed}{HTML}{C72426}
 
