@@ -20,11 +20,11 @@
 \DeclareBoolOption[true]{listtotoc}
 
 \newbool{isthesis}
-\DeclareOption{bericht}{\boolfalse{isthesis}}
-\DeclareOption{arbeit}{\booltrue{isthesis}}
+\DeclareVoidOption{bericht}{\boolfalse{isthesis}}
+\DeclareVoidOption{arbeit}{\booltrue{isthesis}}
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{scrreprt}}
 
 \ProcessKeyvalOptions*
-\ProcessOptions\relax
 
 % Basis-Klasse laden
 \ifRP@duplex
