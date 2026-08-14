@@ -14,8 +14,10 @@
 % Optionen
 % -------------------------------------------------------------------
 \DeclareBoolOption[true]{kopfzeile}
+\DeclareBoolOption[false]{kopfzeilebeititel}
 \DeclareBoolOption[false]{logoinkopfzeile}
 \DeclareBoolOption[false]{duplex}
+\DeclareBoolOption[true]{listtotoc}
 
 \newbool{isthesis}
 \DeclareOption{bericht}{\boolfalse{isthesis}}
@@ -65,7 +67,7 @@
 \definecolor{ohmRed}{HTML}{C72426}
 
 \typeout{
-	Hinweis: Es sind schon einige optionale Pakete geladen, z.B. hyperref für klickbare Links oder pdfpages um pdf Seiten einfach einzufügen \MessageBreak
+	RPdocDEBUG - Hinweis: Es sind schon einige optionale Pakete geladen, z.B. hyperref für klickbare Links oder pdfpages um pdf Seiten einfach einzufügen \MessageBreak
 	Bsp. hyperref: \string\usepackage[hidelinks]\string{hyperref\string} \MessageBreak
 	Bsp. pdfpages: \string\includepdf[pages=-]\string{Datei.pdf\string}
 }
@@ -106,6 +108,7 @@
 
 % Commands
 % -------------------------------------------------------------------
+\typeout{RPdocDEBUG: Starte Commands}
 % Allgemein
 \newcommand{\Autor}[2]{%
     \ifstrequal{#1}{w}{\renewcommand{\@authorpref}{Bearbeiterin}}{}%
@@ -144,6 +147,8 @@
 
 % Layout
 % -------------------------------------------------------------------
+\typeout{RPdocDEBUG: Starte Layout}
+
 \setkomafont{chapter}{\normalfont\@chaptersize\bfseries}
 \setkomafont{section}{\normalfont\@sectionsize\bfseries}
 \setkomafont{subsection}{\normalfont\@subsectionsize\bfseries}
@@ -164,6 +169,16 @@
     \KOMAoptions{headinclude=false}
 \fi
 
+\ifRP@kopfzeilebeititel
+    \renewcommand{\chapterpagestyle}{scrheadings}
+    \typeout{RPdocDEBUG: Kopfzeile auch auf Titelseite aktiviert}
+\fi
+
+\ifRP@listtotoc
+    \KOMAoptions{listof=totoc}
+    \typeout{RPdocDEBUG: Abbildungsverzeichnis und Tabellenverzeichnis im Inhaltsverzeichnis aktiviert}
+\fi
+
 \KOMAoptions{
     captions=tableheading,  % Tabellenüberschrift
     captions=figureheading,  % Abbildungsunterschrift
@@ -176,37 +191,61 @@
 
 \renewcommand*{\chapterheadstartvskip}{\vspace*{0.5cm}}
 
-% Kopfzeile
+% Kopfzeile (AtBeginDocument damit Variablen ausgefüllt sind)
 % -------------------------------------------------------------------
+
 \newcommand{\simpleheader}{%
+    \typeout{RPdocDEBUG: Normale Kopfzeile aktiviert}
     \automark{chapter}    
 
-    \ihead{\@headertopline \\ \headmark}
-    \chead{}
-    \ohead{%
-        \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
-            \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
-            \hspace{0.5em}}{%
-        }
-    \pagemark
+    \ifdefempty{\@headertopline}{%
+        \typeout{RPdocDEBUG: Obere Kopfzeile leer}
+        \ihead[]{\headmark}%
+    }{%
+        \typeout{RPdocDEBUG: Obere Kopfzeile eingefügt}
+        \ihead[]{\@headertopline \\ \headmark}%
     }%
-}%
+
+    \chead{}
+    
+    \ifbool{isthesis}{%
+        \typeout{RPdocDEBUG: Nur pagemark in ohead}
+        \ohead[]{\pagemark}%
+    }{%
+        \typeout{RPdocDEBUG: Komplizierter ohead}
+        \ohead[]{%
+            \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
+                \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
+                \hspace{0.5em}
+                \pagemark
+            }{%
+                \raisebox{-0ex}{\pagemark}
+            }%
+        }%
+    }%
+}% simpleheader
+
+\AtBeginDocument{%
+\typeout{RPdocDEBUG: Starte Kopfzeile}
 
 \ifRP@kopfzeile
     \pagestyle{scrheadings}
     \clearpairofpagestyles
     
     \ifbool{isthesis}{%
-        \ifRP@duplex 
+        \ifRP@duplex
+            \typeout{RPdocDEBUG: Duplex-Kopfzeile aktiviert}
             \automark[section]{chapter}
-            \ihead[]{\@headertopline \\ \headmark}
-            \chead{}
-            \ohead[]{%
-                \ifboolexpr{bool {RP@logoinkopfzeile} and not test {\ifblank{\@ohmlogofile}}}{%
-                    \raisebox{-0.05\height}{\includegraphics[height=2.5em]{\@ohmlogofile}}%
-                    \hspace{0.5em}%
-                }{}%
-                \pagemark
+            \ifdefempty{\@headertopline}{%
+                \ihead[]{\headmark}%
+            }{%
+                \ihead[]{\@headertopline \\ \headmark}%
+            }%
+            \chead{}%
+            \ifdefempty{\@headertopline}{%
+                \ohead[]{\pagemark}%
+            }{%
+                \ohead[]{\raisebox{-0.05\height}{\pagemark}}%
             }%
         \else % wenn nicht duplex
             \simpleheader
@@ -214,21 +253,34 @@
     }{\simpleheader} % wenn nicht Arbeit
 \else
     \pagestyle{plain} % wenn keine Kopfzeile
+    \typeout{RPdocDEBUG: Keine Kopfzeile aktiviert}
 \fi
+
+}% AtBeginDocument
 
 % Intro
 % -------------------------------------------------------------------
+\typeout{RPdocDEBUG: Starte Intro}
+
 \newcommand{\RPintro}{%
     % Arbeit
     % ---------------------------------------------------------------
     \ifbool{isthesis}{%
+        \typeout{RPdocDEBUG: Intro für Abschlussarbeit}
         % Titelseite
         \thispagestyle{empty}
-        \ifdefempty{\@coverimagefile}{\renewcommand{\@coverimagefile}{\@ohmlogofile}}{}%
+        \ifdefempty{\@coverimagefile}{%
+            \typeout{RPdocDEBUG: Kein Titelbild gefunden, verwende Ohm-Logo}
+            \renewcommand{\@coverimagefile}{\@ohmlogofile}
+        }{%
+            \typeout{RPdocDEBUG: Titelbild gefunden}
+        }%
         \begin{center}
             \ifdefempty{\@secondcoverlogofile}{%
+                \typeout{RPdocDEBUG: Kein zweites Logo gefunden, verwende nur Titelbild}
                 \includegraphics[height=2cm]{\@coverimagefile} \\
             }{%
+                \typeout{RPdocDEBUG: Zweites Logo gefunden}
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
                 \hfill
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
@@ -250,14 +302,22 @@
     % Bericht
     % ---------------------------------------------------------------
     }{%
+        \typeout{RPdocDEBUG: Intro für Bericht}
         % Titelseite
         \thispagestyle{empty}
         \enlargethispage{5cm}
-        \ifdefempty{\@coverimagefile}{\renewcommand{\@coverimagefile}{\@ohmlogofile}}{}%
+        \ifdefempty{\@coverimagefile}{%
+            \typeout{RPdocDEBUG: Kein Titelbild gefunden, verwende Ohm-Logo}
+            \renewcommand{\@coverimagefile}{\@ohmlogofile}
+        }{%
+            \typeout{RPdocDEBUG: Titelbild gefunden}
+        }%
         \begin{center}
             \ifdefempty{\@secondcoverlogofile}{%
+                \typeout{RPdocDEBUG: Kein zweites Logo gefunden, verwende nur Titelbild}
                 \includegraphics[width=0.8\textwidth]{\@coverimagefile} \\
             }{%
+                \typeout{RPdocDEBUG: Zweites Logo gefunden}
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@secondcoverlogofile}}%
                 \hfill
                 \adjustbox{width=0.45\textwidth, height=0.2\textheight, keepaspectratio, valign=c}{\includegraphics{\@coverimagefile}}
